@@ -4,3 +4,4 @@
 build
 *.tar.gz
 tmp
+*.deployment.json
