@@ -10,11 +10,11 @@ for D in *; do
     echo "- building ${D}"
     cd "${D}"
     mkdir -p build
-    for f in *.{json,html}; do
-      cp $f build/  2>/dev/null || :
+    for f in {data,html,Dockerfile}; do
+      cp -R $f build/ 2>/dev/null || :
     done
     find ./build -type f -exec sed -i '' "s/VERSION_PLACEHOLDER/${VERSION}/g" {} \;
-    tar -cvf "${D}.tar.gz" -C "build" .
+    tar -cvf "../${D}.tar.gz" -C "build" .
     rm -rf build
     cd ..
   fi
