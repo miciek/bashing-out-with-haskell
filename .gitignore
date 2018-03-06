@@ -1,3 +1,5 @@
 *.hi
 *.o
 .DS_Store
+build
+*.tar.gz
