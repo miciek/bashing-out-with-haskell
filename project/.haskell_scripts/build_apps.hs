@@ -25,21 +25,19 @@ buildApps version = do
 fillVersion :: Text -> FilePath -> Shell ()
 fillVersion version dir = void $ do
   paths <- lstree dir
-  isFile <- testfile paths
-  guard isFile
+  True <- testfile paths
   inplace ("VERSION_PLACEHOLDER" *> return version) paths
 
 getAppDirectories :: FilePath -> Shell FilePath
-getAppDirectories root = do
-  files <- ls root
-  isAppDirectory <- testAppDir files
-  guard isAppDirectory
-  return files
+getAppDirectories dir = do
+  paths <- ls dir
+  True <- testAppDir paths
+  return paths
 
 testAppDir :: FilePath -> Shell Bool
-testAppDir dir = do
-  isDir <- testdir dir
-  hasDockerfile <- testfile $ dir </> "Dockerfile"
+testAppDir path = do
+  isDir <- testdir path
+  hasDockerfile <- testfile $ path </> "Dockerfile"
   return $ isDir && hasDockerfile
 
 buildApp :: FilePath -> (FilePath -> Shell ()) -> Shell ()
